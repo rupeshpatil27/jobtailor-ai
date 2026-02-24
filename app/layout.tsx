@@ -30,7 +30,7 @@ export default function RootLayout({
       >
         <div className="bg-slate-50 w-full min-h-screen">
           <Header />
-          <main className="px-3 lg:px-14 mt-4 md:mt-8">{children}</main>
+          <main>{children}</main>
         </div>
       </body>
     </html>
