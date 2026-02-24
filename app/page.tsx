@@ -1,7 +1,5 @@
-export default function Home() {
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <h1>JobTailor AI</h1>
-    </div>
-  );
-}
+const HomePage = () => {
+  return <div className="w-full md:mx-auto md:max-w-5xl">Home</div>;
+};
+
+export default HomePage;
