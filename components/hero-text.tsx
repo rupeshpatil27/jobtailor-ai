@@ -2,7 +2,7 @@ import { Sparkles } from "lucide-react";
 
 export const HeroText = () => {
   return (
-    <section className="relative flex flex-col items-center justify-center pt-15 pb-16 text-center md:pt-15 md:pb-24 px-6">
+    <section className="relative flex flex-col items-center justify-center text-center">
       {/* 1. The Trust/Tech Badge */}
       {/* <div className="mb-6 inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-sm font-medium text-blue-600 shadow-sm animate-in fade-in slide-in-from-bottom-4 duration-700">
         <Sparkles className="mr-2 h-4 w-4" />
