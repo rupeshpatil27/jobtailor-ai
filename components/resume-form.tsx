@@ -9,10 +9,13 @@ import {
   AlignLeft,
   Loader2,
 } from "lucide-react";
+import FileUploader from "./file-uploader";
 
 export const ResumeForm = () => {
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [loadingStep, setLoadingStep] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -85,6 +88,14 @@ export const ResumeForm = () => {
                 <UploadCloud className="w-4 h-4 text-blue-500" /> Upload Resume
                 (PDF)
               </label>
+
+              <FileUploader
+                file={file}
+                setFile={setFile}
+                loading={loading}
+                progress={progress}
+                loadingStep={loadingStep}
+              />
             </div>
 
             <button
