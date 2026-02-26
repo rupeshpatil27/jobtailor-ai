@@ -124,3 +124,38 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+/* Custom Modern Scrollbar */
+
+/* 1. Make the scrollbar thin */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px; /* For horizontal scrolling if needed */
+}
+
+/* 2. Make the track (background) transparent so it blends perfectly with bg-slate-50 */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* 3. Style the "thumb" to be a soft slate color with rounded pill edges */
+::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1; /* Matches Tailwind's slate-300 */
+  border-radius: 20px;
+  border: 2px solid #f8fafc; /* Matches Tailwind's slate-50 to create a "padding" effect */
+}
+
+/* 4. Make it slightly darker when the user hovers over it */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #94a3b8; /* Matches Tailwind's slate-400 */
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}

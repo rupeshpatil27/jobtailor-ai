@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { Header } from "@/components/header";
 
 const geistSans = Geist({
@@ -28,10 +29,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="bg-slate-50 w-full min-h-screen">
-          <Header />
-          <main>{children}</main>
-        </div>
+        <TooltipProvider>
+          <div className="bg-slate-50 w-full min-h-screen">
+            <Header />
+            <main>{children}</main>
+          </div>
+        </TooltipProvider>
       </body>
     </html>
   );

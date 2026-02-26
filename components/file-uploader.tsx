@@ -1,13 +1,18 @@
 "use client";
 
+import { useState } from "react";
 import {
   UploadCloud,
   FileText,
   X,
-  Loader2,
   CheckCircle2,
-  Sparkles,
+  AlertCircle,
 } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export function formatFileSize(bytes: number): string {
   if (bytes === 0) return "0 Bytes";
@@ -20,59 +25,42 @@ export function formatFileSize(bytes: number): string {
 interface FileUploaderProps {
   file: File | null;
   setFile: (file: File | null) => void;
-  loading: boolean;
-  progress: number;
-  loadingStep: string;
 }
 
-export default function FileUploader({
-  file,
-  setFile,
-  loading,
-  progress,
-  loadingStep,
-}: FileUploaderProps) {
-  // Prevent default behavior for drag and drop (optional enhancement later)
+export const FileUploader = ({ file, setFile }: FileUploaderProps) => {
+  const [fileError, setFileError] = useState<string | null>(null);
+
+  const processSelectedFile = (selectedFile: File) => {
+    setFileError(null);
+
+    if (selectedFile.type !== "application/pdf") {
+      setFileError("Invalid file type. Please upload a PDF.");
+      return;
+    }
+
+    if (selectedFile.size > 5 * 1024 * 1024) {
+      setFileError("File is too large. Maximum size is 5MB.");
+      return;
+    }
+
+    setFile(selectedFile);
+  };
+
   const handleDragOver = (e: React.DragEvent) => e.preventDefault();
+
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      setFile(e.dataTransfer.files[0]);
+      processSelectedFile(e.dataTransfer.files[0]);
     }
   };
 
-  // State 1: Loading / Processing
-  if (loading) {
-    return (
-      <div className="flex w-full flex-col items-center justify-center rounded-2xl border-2 border-blue-200 bg-blue-50/50 py-8 px-6 text-center shadow-inner h-full min-h-55">
-        {/* Dynamic Icon based on the step */}
-        <div className="mb-4 rounded-full bg-blue-100 p-4 text-blue-600 shadow-sm relative">
-          {progress < 90 ? (
-            <UploadCloud className="w-8 h-8 animate-bounce" />
-          ) : (
-            <Sparkles className="w-8 h-8 animate-pulse text-indigo-500" />
-          )}
-          {/* Subtle spinning ring around the icon */}
-          <div className="absolute inset-0 rounded-full border-4 border-blue-200 border-t-blue-500 animate-spin"></div>
-        </div>
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      processSelectedFile(e.target.files[0]);
+    }
+  };
 
-        {/* Dynamic Text to keep user connected */}
-        <p className="text-sm font-bold text-slate-900 mb-4">{loadingStep}</p>
-
-        {/* The Progress Bar */}
-        <div className="w-full max-w-[80%] bg-blue-100 rounded-full h-2.5 mb-2 overflow-hidden">
-          <div
-            className="bg-linear-to-r from-blue-500 to-indigo-500 h-2.5 rounded-full transition-all duration-300 ease-out"
-            style={{ width: `${progress}%` }}
-          ></div>
-        </div>
-
-        <p className="text-xs font-semibold text-blue-600">{progress}%</p>
-      </div>
-    );
-  }
-
-  // State 2: File Selected successfully
   if (file) {
     return (
       <div className="relative flex w-full flex-col items-center justify-center rounded-2xl border-2 border-green-200 bg-green-50 py-10 px-4 text-center shadow-sm transition-all h-full min-h-50">
@@ -92,9 +80,19 @@ export default function FileUploader({
           <CheckCircle2 className="absolute -bottom-1 -right-1 w-5 h-5 text-green-600 bg-white rounded-full" />
         </div>
 
-        <p className="text-sm font-bold text-slate-900 truncate max-w-50">
-          {file.name}
-        </p>
+        <Tooltip delayDuration={200}>
+          <TooltipTrigger asChild>
+            <p className="text-sm font-bold text-slate-900 truncate max-w-50 cursor-help">
+              {file.name}
+            </p>
+          </TooltipTrigger>
+          <TooltipContent
+            side="bottom"
+            className="bg-slate-900 text-white font-medium"
+          >
+            <p>{file.name}</p>
+          </TooltipContent>
+        </Tooltip>
         <p className="text-xs font-medium text-slate-500 mt-1">
           {formatFileSize(file.size)}
         </p>
@@ -102,16 +100,26 @@ export default function FileUploader({
     );
   }
 
-  // State 3: Default Dropzone
   return (
     <label
       onDragOver={handleDragOver}
       onDrop={handleDrop}
-      className="group relative flex w-full cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 py-10 px-4 text-center transition-all hover:border-blue-500 hover:bg-blue-50/50 h-full min-h-50"
+      className={`group relative flex w-full cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed transition-all h-full min-h-55 px-4 py-10 text-center ${
+        fileError
+          ? "border-red-400 bg-red-50 hover:bg-red-50"
+          : "border-slate-300 bg-slate-50 hover:border-blue-500 hover:bg-blue-50/50"
+      }`}
     >
-      <div className="mb-4 rounded-full bg-blue-100 p-4 text-blue-600 transition-transform group-hover:scale-110 group-hover:bg-blue-200 shadow-sm">
+      <div
+        className={`mb-4 rounded-full p-4 transition-transform group-hover:scale-110 shadow-sm ${
+          fileError
+            ? "bg-red-100 text-red-600"
+            : "bg-blue-100 text-blue-600 group-hover:bg-blue-200"
+        }`}
+      >
         <UploadCloud className="w-8 h-8" />
       </div>
+
       <p className="mb-1 text-sm font-bold text-slate-700">
         Click to upload or drag and drop
       </p>
@@ -119,14 +127,21 @@ export default function FileUploader({
         PDF documents only (Max 5MB)
       </p>
 
+      {fileError && (
+        <div className="mt-4 flex items-center gap-1.5 text-xs font-semibold text-red-600 bg-red-100/50 px-3 py-1.5 rounded-full animate-in fade-in zoom-in-95 duration-200">
+          <AlertCircle className="w-4 h-4" />
+          {fileError}
+        </div>
+      )}
+
       <input
         type="file"
         name="resume"
         accept="application/pdf"
         required
         className="hidden"
-        onChange={(e) => setFile(e.target.files?.[0] || null)}
+        onChange={handleInputChange}
       />
     </label>
   );
-}
+};
