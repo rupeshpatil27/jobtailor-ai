@@ -13,8 +13,10 @@ import Lottie from "lottie-react";
 import animationData from "../public/Scan.json";
 
 import { FileUploader } from "./file-uploader";
+import { useRouter } from "next/navigation";
 
 export const ResumeForm = () => {
+  const router = useRouter();
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [loadingText, setLoadingText] = useState("");
@@ -22,7 +24,10 @@ export const ResumeForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => setLoading(false), 3000);
+    setTimeout(() => {
+      setLoading(false);
+      router.push("/results");
+    }, 3000);
   };
 
   return (
