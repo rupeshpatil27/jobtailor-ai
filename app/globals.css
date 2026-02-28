@@ -126,8 +126,16 @@
 }
 
 
-/* Custom Modern Scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
 
+html {
+  overflow-y: scroll;
+}
+
+/* Custom Modern Scrollbar */
 /* 1. Make the scrollbar thin */
 ::-webkit-scrollbar {
   width: 8px;
@@ -153,9 +161,4 @@
 
 ::-webkit-scrollbar-button {
   display: none;
-}
-
-* {
-  scrollbar-width: thin;
-  scrollbar-color: #cbd5e1 transparent;
 }

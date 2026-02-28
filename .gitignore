@@ -40,6 +40,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-/lib/generated/prisma
+.better-auth/
 
-routes.js
+.db
+/lib/generated/prisma

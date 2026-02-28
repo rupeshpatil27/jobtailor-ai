@@ -6,7 +6,7 @@ interface AuthBrandingProps {
 
 export const AuthBranding = ({ mode }: AuthBrandingProps) => {
   return (
-    <div className="hidden lg:flex lg:w-1/2 relative bg-slate-900 items-center justify-center overflow-hidden">
+    <div className="hidden lg:flex lg:w-1/2 bg-slate-900 items-center justify-center overflow-hidden sticky top-0 h-screen">
       <div className="absolute inset-0 bg-linear-to-br from-blue-600/20 to-indigo-900/40 z-0"></div>
       <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-white/20 to-transparent"></div>
       <div className="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-blue-500/10 blur-3xl"></div>

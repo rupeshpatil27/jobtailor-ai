@@ -8,8 +8,10 @@ import {
   AlignLeft,
   Loader2,
 } from "lucide-react";
+
 import Lottie from "lottie-react";
 import animationData from "../public/Scan.json";
+
 import { FileUploader } from "./file-uploader";
 
 export const ResumeForm = () => {
@@ -32,10 +34,10 @@ export const ResumeForm = () => {
           Powered by Google Gemini 1.5 AI
         </div> */}
 
-        <h1 className="max-w-4xl text-5xl font-extrabold tracking-tight text-slate-900 sm:text-6xl md:text-7xl animate-in duration-700">
-          Beat the ATS. <br className="hidden sm:block" />
+        <h1 className="max-w-4xl text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl md:text-6xl animate-in duration-700 mt-5">
+          Start a New Scan. <br className="hidden sm:block" />
           <span className="bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-            Tailor Your Resume Instantly.
+            Target Your Next Role.
           </span>
         </h1>
 
